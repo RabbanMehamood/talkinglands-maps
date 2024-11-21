@@ -9,9 +9,9 @@ const App = () => {
   return (
     <div className="app">
       <h1>Talking Lands Spatial Map</h1>
-      <div className="map-and-info">
-        <MapComponent onFeatureSelect={setSelectedFeature} />
+      <div className="ui-map-style">
         <InfoCard feature={selectedFeature} />
+        <MapComponent onFeatureSelect={setSelectedFeature} />
       </div>
     </div>
   );

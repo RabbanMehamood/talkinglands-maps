@@ -51,9 +51,9 @@ function MapComponent({ onFeatureSelect }) {
           key={polygon.id}
           positions={polygon.coordinates}
           pathOptions={{
-            color: "blue",
-            fillColor: "lightblue",
-            fillOpacity: 0.5,
+            color: "green",
+            fillColor: "yellow",
+            fillOpacity: 0.4,
           }}
           eventHandlers={{ click: () => handlePolygonClick(polygon) }}
         />

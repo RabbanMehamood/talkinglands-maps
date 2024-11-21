@@ -4,7 +4,12 @@ import "../styles/InfoCard.css";
 const InfoCard = ({ feature }) => {
   if (!feature) {
     return (
-      <div className="info-card">Click on a map feature to view details.</div>
+      <div className="info-card">
+        <h3>
+          <p>1.Click on the markers in the map to view point details.</p>
+          <p>2.Click on Polygon area to see polygon details.</p>
+        </h3>
+      </div>
     );
   }
 
