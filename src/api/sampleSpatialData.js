@@ -135,5 +135,5 @@ export const fetchSpatialData = () =>
           },
         ],
       });
-    }, 1000); // Simulated network delay
+    }, 1000);
   });
