@@ -4,47 +4,62 @@ import { fetchSpatialData } from "../api/sampleSpatialData";
 import "leaflet/dist/leaflet.css";
 import "./../styles/MapContainer.css";
 
-import React from "react";
-
 function MapComponent({ onFeatureSelect }) {
-    const [spatialData, setSpatialData] = useState({ points: [], polygons: [] });
-    useEffect(() => {
-      fetchSpatialData().then(setSpatialData);
-    });
-    const handleMarkerClick = (points) => {
-      onFeatureSelect({ type: "points", ...points });
+  const [spatialData, setSpatialData] = useState({ points: [], polygons: [] });
+
+  // Correct useEffect with a dependency array
+  useEffect(() => {
+    const getSpatialData = async () => {
+      const data = await fetchSpatialData();
+      setSpatialData(data);
+      console.log(data.polygons);
     };
-    const handlePolygonClick = (polygon) => {
-      onFeatureSelect({ type: "Polygon", ...polygon });
-    };
-    return (
-      <MapContainer
-        center={[37.7749, -122.4194]}
-        zoom={10}
-        className="map-container"
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    getSpatialData();
+  }, []); // Run only once after the component mounts
+
+  const handleMarkerClick = (point) => {
+    onFeatureSelect({ type: "Point", ...point });
+  };
+
+  const handlePolygonClick = (polygon) => {
+    onFeatureSelect({ type: "Polygon", ...polygon });
+  };
+
+  return (
+    <MapContainer
+      center={[12.9716, 77.5946]} // Bangalore coordinates
+      zoom={12}
+      className="map-container"
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      {spatialData.points.map((point) => (
+        <Marker
+          key={point.id}
+          position={[point.lat, point.lng]}
+          eventHandlers={{ click: () => handleMarkerClick(point) }}
+        >
+          <Popup style={{ background: "lightblue" }}>
+            {point.name}
+          </Popup>
+        </Marker>
+      ))}
+      {spatialData.polygons.map((polygon) => (
+        <Polygon
+          key={polygon.id}
+          positions={polygon.coordinates}
+          pathOptions={{
+            color: "blue",
+            fillColor: "lightblue",
+            fillOpacity: 0.5,
+          }}
+          eventHandlers={{ click: () => handlePolygonClick(polygon) }}
         />
-        {spatialData.points.map((point) => (
-          <Marker
-            key={point.id}
-            position={[point.lat, point.lng]}
-            eventHandlers={{ click: () => handleMarkerClick(point) }}
-          >
-            <Popup>{point.name}</Popup>
-          </Marker>
-        ))}
-        {spatialData.polygons.map((polygon) => (
-          <Polygon
-            key={polygon.id}
-            positions={polygon.coordinates}
-            eventHandlers={{ click: () => handlePolygonClick(polygon) }}
-          />
-        ))}
-      </MapContainer>
-    );
+      ))}
+    </MapContainer>
+  );
 }
 
 export default MapComponent;

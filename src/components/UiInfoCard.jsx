@@ -12,7 +12,7 @@ const InfoCard = ({ feature }) => {
     <div className="info-card">
       <h3>{feature.type} Details</h3>
       <p>
-        <strong>Name:</strong> {feature.name}
+        <strong>Location Name:</strong> {feature.name}
       </p>
       {feature.type === "Point" && (
         <>
