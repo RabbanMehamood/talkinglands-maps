@@ -7,7 +7,7 @@ import "./../styles/MapContainer.css";
 function MapComponent({ onFeatureSelect }) {
   const [spatialData, setSpatialData] = useState({ points: [], polygons: [] });
 
-  // Correct useEffect with a dependency array
+  
   useEffect(() => {
     const getSpatialData = async () => {
       const data = await fetchSpatialData();
@@ -15,7 +15,7 @@ function MapComponent({ onFeatureSelect }) {
       console.log(data.polygons);
     };
     getSpatialData();
-  }, []); // Run only once after the component mounts
+  }, []); 
 
   const handleMarkerClick = (point) => {
     onFeatureSelect({ type: "Point", ...point });
@@ -27,7 +27,7 @@ function MapComponent({ onFeatureSelect }) {
 
   return (
     <MapContainer
-      center={[12.9716, 77.5946]} // Bangalore coordinates
+      center={[12.9716, 77.5946]} 
       zoom={12}
       className="map-container"
     >
