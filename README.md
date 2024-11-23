@@ -46,5 +46,4 @@ Ensure you have the following installed:
    npm run dev
 4. **Access the Application Open your browser and navigate to the URL provided in the terminal**
    ```bash
-    http://localhost:3000
-
+    http://localhost:5173
